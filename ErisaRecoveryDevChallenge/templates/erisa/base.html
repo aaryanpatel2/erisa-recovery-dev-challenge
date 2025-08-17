@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ERISA Recovery Dev Challenge</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+    <script src="{% static 'erisa/htmx.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'erisa/output.css' %}">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <header class="bg-white shadow p-4 text-2xl font-bold text-center">ERISA Recovery Dev Challenge 2025</header>
+    <main class="flex-1 container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">ERISA Recovery Dev Challenge 2025</footer>
+</body>
+</html>

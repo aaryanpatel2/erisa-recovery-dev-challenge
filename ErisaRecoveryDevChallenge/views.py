@@ -1,7 +1,9 @@
 from django.db import connection
 from django.http import JsonResponse
+from django.shortcuts import render
 
 def claims_joined_view(request):
+    dev = False # set True if you want to test endpoint in Bruno using JSON response
     with connection.cursor() as cursor:
         cursor.execute("""
             SELECT
@@ -26,4 +28,10 @@ def claims_joined_view(request):
             dict(zip(columns, row))
             for row in cursor.fetchall()
         ]
-    return JsonResponse(results, safe=False)
+    if dev:
+        return JsonResponse(results, safe=False)
+
+    if request.headers.get('HX-Request') == 'true':
+        return render(request, "erisa/claims_table.html", {"claims": results})
+    # Otherwise, return the full page with layout
+    return render(request, "erisa/claims.html", {"claims": results})

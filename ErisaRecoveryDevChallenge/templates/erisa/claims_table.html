@@ -1,0 +1,31 @@
+{% load static %}
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 shadow rounded-lg bg-white">
+      <thead class="bg-blue-500 text-white">
+        <tr>
+          <th class="px-4 py-2">Claim ID</th>
+          <th class="px-4 py-2">Patient Name</th>
+          <th class="px-4 py-2">Billed</th>
+          <th class="px-4 py-2">Paid</th>
+          <th class="px-4 py-2">Status</th>
+          <th class="px-4 py-2">Insurer</th>
+          <th class="px-4 py-2">Discharge Date</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        {% for claim in claims %}
+        <tr class="hover:bg-blue-50">
+          <td class="px-4 py-2">{{ claim.id }}</td>
+          <td class="px-4 py-2">{{ claim.patient_name }}</td>
+          <td class="px-4 py-2">{{ claim.billed_amount }}</td>
+          <td class="px-4 py-2">{{ claim.paid_amount }}</td>
+          <td class="px-4 py-2">{{ claim.status }}</td>
+          <td class="px-4 py-2">{{ claim.insurer_name }}</td>
+          <td class="px-4 py-2">{{ claim.discharge_date }}</td>
+          <td class="px-4 py-2">Actions</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>

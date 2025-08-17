@@ -1,0 +1,10 @@
+{% extends "erisa/base.html" %}
+{% block content %}
+<div 
+  hx-get="/api/claims/" 
+  hx-trigger="load" 
+  hx-target="#claims-list" 
+  hx-swap="innerHTML">
+</div>
+<div id="claims-list"></div>
+{% endblock %}
