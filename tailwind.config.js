@@ -1,7 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './ErisaRecoveryDevChallenge/templates/**/*.html',
+    "./**/templates/**/*.html",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {},
+  },
   plugins: [],
 }
