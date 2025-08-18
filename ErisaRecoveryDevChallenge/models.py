@@ -9,8 +9,8 @@ class ClaimsModel(models.Model):
         ('paid', 'Paid'),
         ('approved', 'Approved'),
         ('denied', 'Denied'),
-    ])
-    insurer_name = models.CharField(max_length=100)
+    ], db_index=True)
+    insurer_name = models.CharField(max_length=100, db_index=True)
     discharge_date = models.DateField()
 
     def __str__(self):
