@@ -12,6 +12,8 @@ class ClaimsModel(models.Model):
     ], db_index=True)
     insurer_name = models.CharField(max_length=100, db_index=True)
     discharge_date = models.DateField()
+    flagged = models.BooleanField(default=False)
+    custom_note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.patient_name

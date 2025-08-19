@@ -56,11 +56,28 @@
   document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("claim-search").value = "";
   });
-  document.addEventListener("htmx:configRequest", function() {
+  document.addEventListener("htmx:afterSwap", function(event) {
+    let target = event.detail.elt.getAttribute('hx-target');
+  });
+  document.addEventListener("htmx:configRequest", function(event) {
+  let target = event.detail.elt.getAttribute('hx-target');
+  if (target === "#claims-list") {
     document.getElementById("loading-spinner").style.display = "block";
     document.getElementById("claims-list").style.display = "none";
+  }
   });
-  document.addEventListener("htmx:afterSwap", function() {
+  document.addEventListener("htmx:afterSwap", function(event) {
+    let target = event.detail.elt.getAttribute('hx-target');
+    if (target === "#claims-list") {
+      document.getElementById("loading-spinner").style.display = "none";
+      document.getElementById("claims-list").style.display = "block";
+    }
+  });
+  document.addEventListener("htmx:responseError", function() {
+    document.getElementById("loading-spinner").style.display = "none";
+    document.getElementById("claims-list").style.display = "block";
+  });
+  document.addEventListener("htmx:afterRequest", function() {
     document.getElementById("loading-spinner").style.display = "none";
     document.getElementById("claims-list").style.display = "block";
   });

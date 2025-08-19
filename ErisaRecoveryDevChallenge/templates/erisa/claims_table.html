@@ -12,6 +12,18 @@
     align-items: center;
     gap: 0.25rem; 
     border-radius: 0.375rem; /* Tailwind's rounded-md */
+    &:hover {
+      background-color: rgb(212, 212, 212);
+    }
+}
+
+.submit-button {
+  background-color: rgb(230, 227, 227);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  &:hover {
+    background-color: rgb(212, 212, 212);
+  }
 }
 .actions {
   padding-top: 0.5rem;
@@ -57,9 +69,23 @@
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
               </svg>
             </button>
-            <button title="Flag" class="inline-flex items-center p-2 rounded hover:bg-red-100 text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 640"><path d="M144 88C144 74.7 133.3 64 120 64C106.7 64 96 74.7 96 88L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 452L224.3 431.9C265.4 421.6 308.9 426.4 346.8 445.3C391 467.4 442.3 470.1 488.5 452.7L523.2 439.7C535.7 435 544 423.1 544 409.7L544 130C544 107 519.8 92 499.2 102.3L489.6 107.1C443.3 130.3 388.8 130.3 342.5 107.1C307.4 89.5 267.1 85.1 229 94.6L144 116L144 88zM144 165.5L240.6 141.3C267.6 134.6 296.1 137.7 321 150.1C375.9 177.5 439.7 179.8 496 156.9L496 398.7L471.6 407.8C437.9 420.4 400.4 418.5 368.2 402.4C320 378.3 264.9 372.3 212.6 385.3L144 402.5L144 165.5z"/></svg>
-            </button>
+            <form hx-post="/api/claims/flag/{{ claim.id }}/" hx-target="closest tr" hx-swap="outerHTML" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" title="Flag for Review" class="inline-flex items-center p-2 rounded hover:bg-red-100 text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
+                {% if claim.flagged %}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#e3342f" viewBox="0 0 640 640"><circle cx="320" cy="320" r="200"/></svg>
+                {% else %}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 640"><path d="M144 88C144 74.7 133.3 64 120 64C106.7 64 96 74.7 96 88L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 452L224.3 431.9C265.4 421.6 308.9 426.4 346.8 445.3C391 467.4 442.3 470.1 488.5 452.7L523.2 439.7C535.7 435 544 423.1 544 409.7L544 130C544 107 519.8 92 499.2 102.3L489.6 107.1C443.3 130.3 388.8 130.3 342.5 107.1C307.4 89.5 267.1 85.1 229 94.6L144 116L144 88zM144 165.5L240.6 141.3C267.6 134.6 296.1 137.7 321 150.1C375.9 177.5 439.7 179.8 496 156.9L496 398.7L471.6 407.8C437.9 420.4 400.4 418.5 368.2 402.4C320 378.3 264.9 372.3 212.6 385.3L144 402.5L144 165.5z"/></svg>
+                {% endif %}
+              </button>
+            </form>
+            <form hx-post="/api/claims/note/{{ claim.id }}/" hx-target="#custom-note-{{ claim.id }}" hx-swap="outerHTML" style="display:inline;">
+              {% csrf_token %}
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <input type="text" name="custom_note" value="" placeholder="Add note..." class="custom-note border rounded px-2 py-1 text-sm" style="width:100px; margin-right: 0.5rem;"/>
+                <button type="submit" class="submit-button">Submit</button>
+              </div>
+            </form>
           </td>
         </tr>
         <tr x-show="expandedRows.includes({{ claim.id }})" x-cloak class="bg-gray-50">
@@ -67,7 +93,8 @@
             <div>
               <strong>Extra Details:</strong><br>
               Denial Reason: <span class="denial_reason">{{ claim.denial_reason}}</span><br>
-              CPT Codes: {{ claim.cpt_codes }}
+              CPT Codes: {{ claim.cpt_codes }}<br>
+              Custom Note: <span id="custom-note-{{ claim.id }}" class="custom_note">{{ claim.custom_note|default:"N/A" }}</span><br>
             </div>
           </td>
         </tr>
@@ -75,3 +102,4 @@
     </tbody>
   </table>
 </div>
+
