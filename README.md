@@ -15,8 +15,7 @@ This project is a lightweight web application that mimics insurance claim analys
 - [x] 🚩 Flagging claims for review
 - [x] 📝 Adding custom notes/annotations
 - [x] 🔍 Search and filter by status or insurer
-- [x] CSV re-upload
-- 🎁 (Bonus) Admin dashboard, user authentication
+- [x] (Bonus) CSV re-upload
 
 
 ## 🌟 Core Features (Implemented)
