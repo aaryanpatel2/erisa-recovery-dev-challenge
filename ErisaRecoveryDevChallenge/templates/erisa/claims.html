@@ -9,6 +9,7 @@
     border-radius: 4px;
     padding: 0.5rem;
   }
+  
 </style>
 <div 
   hx-get="/api/claims/" 
@@ -17,21 +18,44 @@
   hx-swap="innerHTML">
 </div>
 <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-<div class="flex items-center gap-2 w-full mb-4 bg-white px-2 py-1">
+<div class="flex flex-wrap items-center gap-2 w-full mb-4 bg-white px-2 py-1">
   <span class="search">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 640"><path d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/></svg>
   </span>
   <input
-  id="claim-search"
-  type="text"
-  placeholder="Search claims..."
-  class="w-full px-3 py-2"
-  hx-get="/api/claims/"
-  hx-trigger="keyup changed delay:300ms"
-  hx-target="#claims-list"
-  hx-include="[name='search']"
-  name="search"
-/>
+    id="claim-search"
+    type="text"
+    placeholder="Search claims..."
+    class="w-full px-3 py-2"
+    hx-get="/api/claims/"
+    hx-trigger="keyup changed delay:300ms"
+    hx-target="#claims-list"
+    hx-include="[name='search'],[name='sort_by'],[name='discharge_date'],[name='flagged_first']"
+    name="search"
+  />
+  <select name="sort_by" class="px-2 py-1 border rounded">
+    <option value="">Clear Filter</option>
+    <option value="billed_amount:asc">Billed Amount (Low to High)</option>
+    <option value="billed_amount:desc">Billed Amount (High to Low)</option>
+    <option value="paid_amount:asc">Paid Amount (Low to High)</option>
+    <option value="paid_amount:desc">Paid Amount (High to Low)</option>
+    <option value="discharge_date:asc">Discharge Date (Earliest First)</option>
+    <option value="discharge_date:desc">Discharge Date (Latest First)</option>
+  </select>
+  <label class="flex items-center gap-1">
+    <input type="checkbox" name="flagged_first" value="1" />
+    Flagged
+  </label>
+  <button
+    class="px-3 py-2 bg-blue-500 text-white rounded filter-btn"
+    id="filter-button"
+    hx-get="/api/claims/"
+    hx-target="#claims-list"
+    hx-include="[name='search'],[name='discharge_date'],[name='sort_by'],[name='flagged_first']"
+    type="button"
+  >
+    Filter
+  </button>
 </div>
 <div id="loading-spinner" style="display:none; text-align:center; margin-bottom:1rem;">
   <div class="spinner"></div>
@@ -49,6 +73,12 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+  .filter-btn:hover {
+    background-color: #2563eb; /* Tailwind blue-600 */
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
 </style>
 <div id="claims-list"></div>
 </div>

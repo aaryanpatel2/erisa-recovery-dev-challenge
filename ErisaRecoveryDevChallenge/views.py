@@ -10,6 +10,15 @@ from django.http import HttpResponse
 def claims_joined_view(request):
     dev = False # set True if you want to test endpoint in Bruno using JSON response
     search = request.GET.get('search', '').strip().lower()
+    sort_by = request.GET.get('sort_by', '').strip()
+    flagged_first = request.GET.get('flagged_first', '')
+    # Parse sort_by for field and asc/desc
+    sort_field, sort_dir = None, 'ASC'
+    if ':' in sort_by:
+        sort_field, sort_dir = sort_by.split(':', 1)
+        sort_dir = 'DESC' if sort_dir.lower() == 'desc' else 'ASC'
+    else:
+        sort_field = sort_by if sort_by else None
     query = """
         SELECT
             c.id AS id,
@@ -31,10 +40,25 @@ def claims_joined_view(request):
             c.id = d.claim_id
     """
     params = []
+    where_clauses = []
     if search:
-        query += " WHERE LOWER(c.status) LIKE %s OR LOWER(c.insurer_name) LIKE %s"
+        where_clauses.append("(LOWER(c.status) LIKE %s OR LOWER(c.insurer_name) LIKE %s)")
         like_pattern = f"%{search}%"
         params.extend([like_pattern, like_pattern])
+    if where_clauses:
+        query += " WHERE " + " AND ".join(where_clauses)
+    allowed_sorts = {
+        'billed_amount': 'c.billed_amount',
+        'paid_amount': 'c.paid_amount',
+        'discharge_date': 'c.discharge_date'
+    }
+    order_clauses = []
+    if flagged_first:
+        order_clauses.append("c.flagged DESC")
+    if sort_field in allowed_sorts:
+        order_clauses.append(f"{allowed_sorts[sort_field]} {sort_dir}")
+    if order_clauses:
+        query += " ORDER BY " + ", ".join(order_clauses)
     query += ";"
     with connection.cursor() as cursor:
         cursor.execute(query, params)
