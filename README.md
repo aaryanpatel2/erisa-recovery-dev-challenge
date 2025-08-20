@@ -8,7 +8,7 @@
 
 
 ## 📋 Challenge Overview
-This project is a lightweight web application that mimics insurance claim analysis at ERISA. So far, the application supports:
+This project is a lightweight web application that mimics insurance claim analysis at ERISA Recovery. So far, the application supports:
 - [x] 📥 Data ingestion from CSV
 - [x] 📄 Claims list and detail views
 - [x] ⚡️ HTMX-powered dynamic detail loading
