@@ -3,7 +3,7 @@
 ## 🛠️ Tech Stack
 - **Backend:** Django v4+ (Python) 🐍
 - **Database:** SQLite 🗄️
-- **Frontend:** HTML/CSS + HTMX 🎨
+- **Frontend:** HTML/CSS (+ Tailwind CSS ) + HTMX 🎨
 - **Client-Side:** Alpine.js (JavaScript) ⚡️
 
 
