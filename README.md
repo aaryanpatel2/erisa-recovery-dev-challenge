@@ -79,9 +79,10 @@ This project is a lightweight web application that mimics insurance claim analys
 
 
 ## 📝 Notes
-- ❗️Do not commit your `.env` file or any real secrets to version control.
+- ❗️ Do not commit your `.env` file or any real secrets to version control.
 - ⚠️ For production, set `DEBUG = False` and configure `ALLOWED_HOSTS` in `settings.py`.
 - 👤 Use Django admin to manage users and data: `python manage.py createsuperuser`
+- ✅ For best results, use Firefox or Chrome.
 
 
 ## 📡 API
