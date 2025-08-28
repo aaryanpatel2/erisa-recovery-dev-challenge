@@ -1,5 +1,7 @@
 # ERISA Recovery Dev Challenge
 
+Check out the live site [here](apdev.pythonanywhere.com)!
+
 ## 🛠️ Tech Stack
 - **Backend:** Django v4+ (Python) 🐍
 - **Database:** SQLite 🗄️
@@ -30,6 +32,7 @@ This project is a lightweight web application that mimics insurance claim analys
 - [] **Admin Dashboard:** 📊 Stats like total flagged claims, average underpayment
 - [x] **CSV Re-upload:** 🔄 Overwrite or append logic for data
 - [] **User Authentication:** 🔐 Login system with user-specific annotations
+- [x] **GitHub Webhook:** 🔗 Automatically pulls and redeploys on PythonAnywhere when a GitHub push event occurs (my own idea/feature, separate from the challenge)
 
 
 ## ⚙️ Setup Instructions
